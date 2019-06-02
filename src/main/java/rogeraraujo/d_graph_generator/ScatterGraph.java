@@ -1,6 +1,7 @@
 package rogeraraujo.d_graph_generator;
 
 import org.jzy3d.analysis.AbstractAnalysis;
+import org.jzy3d.analysis.AnalysisLauncher;
 import org.jzy3d.chart.factories.AWTChartComponentFactory;
 import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Coord3d;
@@ -21,7 +22,7 @@ public class ScatterGraph extends AbstractAnalysis
 	 * An array containing all series to be plotted
 	 * @see Serie
 	 */
-	private Serie[] series;
+	private Serie[] series = {};
 	
 	/**
 	 * An array of strings representing The axis' labels. (x, y, z)
@@ -92,6 +93,7 @@ public class ScatterGraph extends AbstractAnalysis
         this.graph = new Scatter(points, colors, this.width);
 	}
 
+	@Override
 	public void init() {
 		buildChart();	
 	}
@@ -106,5 +108,27 @@ public class ScatterGraph extends AbstractAnalysis
         chart.getAxeLayout().setXAxeLabel(this.axis[0]);
         chart.getAxeLayout().setYAxeLabel(this.axis[1]);
         chart.getAxeLayout().setZAxeLabel(this.axis[2]);
+        
+        try {
+			AnalysisLauncher.open(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Serie[] getSeries() {
+		return series;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public Scatter getGraph() {
+		return graph;
+	}
+
+	public String[] getAxis() {
+		return axis;
 	}
 }
