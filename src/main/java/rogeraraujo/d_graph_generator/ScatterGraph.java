@@ -92,8 +92,7 @@ public class ScatterGraph extends AbstractAnalysis
         this.graph = new Scatter(points, colors, this.width);
 	}
 
-	@Override
-	public void init() throws Exception {
+	public void init() {
 		buildChart();	
 	}
 	
