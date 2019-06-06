@@ -32,7 +32,7 @@ public class ScatterGraph extends AbstractAnalysis
 	/**
 	 * The pretended width to the graph.
 	 */
-	private int width = 7;
+	private int width;
 	
 	/**
 	 * The graph from jzy3d rendered.
@@ -43,6 +43,7 @@ public class ScatterGraph extends AbstractAnalysis
 	public ScatterGraph(Serie[] series) {
 		super();
 		this.series = series;
+		draw();
 	}
 	
 	public ScatterGraph(Serie[] series, String[] axis) throws DimensionLimitException {
@@ -50,12 +51,14 @@ public class ScatterGraph extends AbstractAnalysis
 		
 		setAxis(axis);
 		this.series = series;
+		draw();
 	}
 
 	public ScatterGraph(Serie[] series, int width) {
 		super();
 		this.series = series;
 		this.width = width;
+		draw();
 	}
 
 	public ScatterGraph(Serie[] series, String[] axis, int width) throws DimensionLimitException {
@@ -63,6 +66,7 @@ public class ScatterGraph extends AbstractAnalysis
 		this.series = series;
 		this.width = width;
 		setAxis(axis);
+		draw();
 	}
 	
 	private void setAxis(String[] axis) throws DimensionLimitException {
@@ -90,7 +94,7 @@ public class ScatterGraph extends AbstractAnalysis
 			colors[index] = new Color(color.r, color.g, color.b);
 		}
         
-        this.graph = new Scatter(points, colors, this.width);
+        this.graph = new Scatter(points, colors, width);
 	}
 
 	@Override
@@ -99,16 +103,24 @@ public class ScatterGraph extends AbstractAnalysis
 	}
 	
 	/**
-	 * Open the chart in a new java app window
+	 * Configures the chart according data 
 	 */
-	public void drawAndOpen()
+	private void draw()
 	{
+		this.init();
+		
 		chart = AWTChartComponentFactory.chart(Quality.Advanced, "newt");
         chart.getScene().add(this.graph);
         chart.getAxeLayout().setXAxeLabel(this.axis[0]);
         chart.getAxeLayout().setYAxeLabel(this.axis[1]);
         chart.getAxeLayout().setZAxeLabel(this.axis[2]);
-        
+	}
+	
+	/**
+	 * Open the chart in a new java app window
+	 */
+	public void open()
+	{
         try {
 			AnalysisLauncher.open(this);
 		} catch (Exception e) {

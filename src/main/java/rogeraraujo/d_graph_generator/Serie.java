@@ -19,7 +19,7 @@ public class Serie {
 	 * A Color from jzy3d.
 	 * @see Color
 	 */
-	private Color color;
+	private Color color = Color.BLACK;
 	
 	public Serie(double[] values, Color color) throws DimensionLimitException {
 		if (values.length != 3) {
@@ -28,6 +28,14 @@ public class Serie {
 		
 		this.values = values;
 		this.color = color;
+	}
+	
+	public Serie(double[] values) throws DimensionLimitException {
+		if (values.length != 3) {
+			throw new DimensionLimitException();
+		}
+		
+		this.values = values;
 	}
 
 	public double[] getValues() {

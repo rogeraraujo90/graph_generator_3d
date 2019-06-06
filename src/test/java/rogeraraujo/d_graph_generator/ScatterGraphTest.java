@@ -28,8 +28,12 @@ public class ScatterGraphTest extends TestCase {
         return new TestSuite( ScatterGraphTest.class );
     }
     
-    public void testDefautValues() {
+    public void testDefautValues() throws DimensionLimitException {
     	Serie[] series = new Serie[1];
+    	double[] serieValues = {0, 0, 0};
+    	
+    	Serie serie = new Serie(serieValues);
+    	series[0] = serie;
     	
     	ScatterGraph graph = new ScatterGraph(series);
     	
@@ -41,11 +45,15 @@ public class ScatterGraphTest extends TestCase {
     	assertEquals("YAxis were correctly defined", "y", axis[1]);
     	assertEquals("ZAxis were correctly defined", "z", axis[2]);
     	
-    	assertEquals("Width was correctly defined", 7, graph.getWidth());
+    	assertEquals("Width was correctly defined", 0, graph.getWidth());
     }
     
     public void testCustomizedAxis() throws DimensionLimitException {
     	Serie[] series = new Serie[1];
+    	double[] serieValues = {0, 0, 0};
+    	
+    	Serie serie = new Serie(serieValues);
+    	series[0] = serie;
     	String[] customizedAxis = {"a", "b", "c"};
     	
     	ScatterGraph graph = new ScatterGraph(series, customizedAxis);
@@ -58,7 +66,7 @@ public class ScatterGraphTest extends TestCase {
     	assertEquals("YAxis were correctly defined", "b", axis[1]);
     	assertEquals("ZAxis were correctly defined", "c", axis[2]);
     	
-    	assertEquals("Width was correctly defined", 7, graph.getWidth());
+    	assertEquals("Width was correctly defined", 0, graph.getWidth());
     }
     
     public void testCustomizedAxisFails(){
@@ -75,6 +83,11 @@ public class ScatterGraphTest extends TestCase {
     
     public void testCustomizedAxisAndWidth() throws DimensionLimitException {
     	Serie[] series = new Serie[1];
+    	double[] serieValues = {0, 0, 0};
+    	
+    	Serie serie = new Serie(serieValues);
+    	series[0] = serie;
+    	
     	String[] customizedAxis = {"a", "b", "c"};
     	int width = 2;
     	
@@ -104,8 +117,12 @@ public class ScatterGraphTest extends TestCase {
 		}
     }
     
-    public void testCustomizedWidth() {
+    public void testCustomizedWidth() throws DimensionLimitException {
     	Serie[] series = new Serie[1];
+    	double[] serieValues = {0, 0, 0};
+    	
+    	Serie serie = new Serie(serieValues);
+    	series[0] = serie;
     	int width = 2;
     	
     	ScatterGraph graph = new ScatterGraph(series, 2);
@@ -167,27 +184,5 @@ public class ScatterGraphTest extends TestCase {
     		assertEquals("g color was defined correctly", serieColor.g, chartColor.g);
     		assertEquals("b color was defined correctly", serieColor.b, chartColor.b);
     	}
-    }
-    
-    public void testDrawAndOpen() throws DimensionLimitException {
-    	double[] serie1Values = {1, 2, 3};
-    	double[] serie2Values = {4, 5, 6};
-    	double[] serie3Values = {7, 8, 9};
-    	
-    	Color serie1Color = Color.GREEN;
-    	Color serie2Color = Color.YELLOW;
-    	Color serie3Color = Color.BLUE;
-    	
-    	Serie serie1 = new Serie(serie1Values, serie1Color);
-    	Serie serie2 = new Serie(serie2Values, serie2Color);
-    	Serie serie3 = new Serie(serie3Values, serie3Color);
-    	
-    	Serie[] series = {serie1, serie2, serie3};
-    	String[] customizedAxis = {"a", "b", "c"};
-    	int width = 2;
-    	
-    	ScatterGraph graph = new ScatterGraph(series, customizedAxis, width);
-    	
-    	graph.drawAndOpen();
     }
 }
